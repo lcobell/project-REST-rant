@@ -9,8 +9,9 @@ app.set("view engine", "jsx");
 app.engine("jsx", require("express-react-views").createEngine());
 app.use(express.static("public"));
 // import the router created in controllers folder
-app.use("/places", require("./controllers/places"));
 app.use(express.urlencoded({ extended: true }));
+app.use("/places", require("./controllers/places"));
+
 // create homepage route
 app.get("/", (req, res) => {
   res.render("home");

@@ -28,6 +28,6 @@ router.get("/new", (req, res) => {
 
 router.get("/:id", (req, res) => {
   let id = req.params.id;
-  res.send("Details");
+  res.send("Details about a particular place");
 });
 module.exports = router;
