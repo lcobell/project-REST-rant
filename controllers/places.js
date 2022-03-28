@@ -21,4 +21,13 @@ router.get("/", (req, res) => {
   ];
   res.render("places/index", { places });
 });
+
+router.get("/new", (req, res) => {
+  res.render("places/new");
+});
+
+router.get("/:id", (req, res) => {
+  let id = req.params.id;
+  res.send("Details");
+});
 module.exports = router;
