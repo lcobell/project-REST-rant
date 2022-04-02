@@ -3,6 +3,8 @@ require("dotenv").config();
 // require express
 const express = require("express");
 // initialize the app variable
+// require methodOverride to use PUT of DELETE (only GET and POST are available until this is done)
+const methodOverride = require("method-override");
 const app = express();
 
 app.set("view engine", "jsx");
@@ -10,6 +12,7 @@ app.engine("jsx", require("express-react-views").createEngine());
 app.use(express.static("public"));
 // import the router created in controllers folder
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 app.use("/places", require("./controllers/places"));
 
 // create homepage route
