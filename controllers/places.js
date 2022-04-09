@@ -67,6 +67,7 @@ router.delete("/:id", (req, res) => {
 // });
 router.post("/:id/comment", (req, res) => {
   console.log(req.body);
+  req.body.rant = req.body.rant ? true : false;
   db.Place.findById(req.params.id)
     .then((place) => {
       db.Comment.create(req.body)
@@ -85,12 +86,12 @@ router.post("/:id/comment", (req, res) => {
     });
 });
 
-router.post("/:id/rant", (req, res) => {
-  res.send("GET /places/:id/rant stub");
-});
+// router.post("/:id/rant", (req, res) => {
+//   res.send("GET /places/:id/rant stub");
+// });
 
-router.delete("/:id/rant/:rantId", (req, res) => {
-  res.send("GET /places/:id/rant/:rantId stub");
-});
+// router.delete("/:id/rant/:rantId", (req, res) => {
+//   res.send("GET /places/:id/rant/:rantId stub");
+// });
 
 module.exports = router;

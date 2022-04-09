@@ -32,7 +32,7 @@ function show(data) {
 
       <h2>Comments</h2>
       {comments}
-      <form method="POST" action={`/places/$data.id}?_method=PUT`}>
+      <form action={`/places/${data.place.id}/comment`} method="POST">
         <h2>Leave a comment!</h2>
         <div className="form-group">
           <label htmlFor="author">Author</label>
