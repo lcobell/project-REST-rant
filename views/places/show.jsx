@@ -32,7 +32,49 @@ function show(data) {
 
       <h2>Comments</h2>
       {comments}
-      <p>No comments yet</p>
+      <form method="POST" action={`/places/$data.id}?_method=PUT`}>
+        <h2>Leave a comment!</h2>
+        <div className="form-group">
+          <label htmlFor="author">Author</label>
+          <input
+            className="form-control"
+            id="author"
+            name="author"
+            placeholder="Your Name"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="content">Content</label>
+          <input
+            className="form-control"
+            id="content"
+            name="content"
+            type="textarea"
+            placeholder="Leave your review here."
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="stars">Star Rating</label>
+          <input
+            className="form-control"
+            id="stars"
+            name="stars"
+            type="range"
+            min="0"
+            max="5"
+            step=".5"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="rant">Is this a rant!?</label>
+          <input id="rant" name="rant" type="checkbox" />
+        </div>
+        <input
+          className="btn btn-primary"
+          type="submit"
+          value="Add Comment"
+        ></input>
+      </form>
       <a href={`/places/${data.id}/edit`} className="btn btn-warning">
         Edit
       </a>
