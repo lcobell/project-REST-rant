@@ -36,7 +36,7 @@ function new_form() {
             <label for="founded">Founded Year</label>
             <input
               type="number"
-              classame="form-control"
+              className="form-control"
               id="founded"
               name="founded"
               value={new Date().getFullYear}

@@ -7,7 +7,7 @@ db.Place.create([
     state: "WA",
     cuisines: "Thai, Pan-Asian",
     pic: "/images/h-thai-ml-tables.jpg",
-    founded: 1989,
+    founded: 1990,
   },
   {
     name: "Coding Cat Cafe",
