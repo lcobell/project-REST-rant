@@ -6,7 +6,7 @@ db.Place.create([
     city: "Seattle",
     state: "WA",
     cuisines: "Thai, Pan-Asian",
-    pic: "/images/h-thai-ml-tables.jpg",
+    pic: "https://i1.pickpik.com/photos/686/513/127/chairs-empty-restaurant-seats-thumb.jpg",
     founded: 1990,
   },
   {

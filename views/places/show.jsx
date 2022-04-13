@@ -2,87 +2,128 @@ const React = require("react");
 const Def = require("../default");
 
 function show(data) {
+  // if no comments exist...
   let comments = <h3 className="inactive">No comments yet!</h3>;
+
+  // if comments exist...
   if (data.place.comments.length) {
     comments = data.place.comments.map((c) => {
       return (
         <div className="border">
           <h2 className="rant">{c.rant ? "Rant! 😡" : "Rave! 😻"}</h2>
-          <h4>{c.content}</h4>
-          <h3>
-            <strong>- {c.author}</strong>
-          </h3>
+          <div>{c.content}</div>
+          <div>- {c.author}</div>
           <h4>Rating: {c.stars}</h4>
+          <form
+            method="POST"
+            action={`/places/${data.place.id}/comment/${c.id}?_method=DELETE`}
+          >
+            <input
+              type="submit"
+              className="btn btn-danger"
+              value="Delete Comment"
+            />
+          </form>
         </div>
       );
     });
   }
+
+  let rating = <div className="inactive">Not yet rated</div>;
+  let stars = "";
+
+  if (data.place.comments.length) {
+    let sumRatings = data.place.comments.reduce((tot, c) => {
+      return tot + c.stars;
+    }, 0);
+    let averageRating = sumRatings / data.place.comments.length;
+    rating = <span>{Math.round(averageRating)} stars;</span>;
+    stars = "";
+    for (let i = 0; i < averageRating; i++) {
+      stars += "⭐️";
+    }
+  }
+
   return (
     <Def>
       <main>
-        <img src={data.place.pic} alt={data.place.name} />
+        <div className="row">
+          <div className="col-sm-6">
+            <img src={data.place.pic} alt={data.place.name} />
+            <div>
+              Located in {data.place.city}, {data.place.state}
+            </div>
+          </div>
+          <div className="col-sm-6">
+            <h2>Description</h2>
+            <div>{data.place.showEstablished()}</div>
+            <div>Serving {data.place.cuisines}</div>
+            <h3>Rating {stars} starz</h3>
+          </div>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {/* // edit // */}
+          <a href={`/places/${data.place.id}/edit`}>
+            <button className="btn btn-outline-primary">Edit</button>
+          </a>
+          {/* 
+          delete */}
+          <form
+            action={`/places/${data.place.id}?_method=DELETE`}
+            method="POST"
+          >
+            <input
+              className="btn btn-danger"
+              type="submit"
+              value="Delete Place"
+            />
+          </form>
+        </div>
+        <hr />
+        <h2>Comments</h2>
+        {comments}
+        // new comment
+        <form method="POST" action={`/places/${data.place.id}/comment`}>
+          <div className="form-group">
+            <label htmlFor="author">Author</label>
+            <input className="form-control" id="author" name="author" />
+          </div>
 
-        <h1>{data.place.name}</h1>
-        <h3>{data.place.showEstablished()}</h3>
-        <h4>Serving {data.place.cuisines}</h4>
-        <p>Not yet rated</p>
-        <h3>Description</h3>
-        <p>Located where restaurants are!</p>
+          <div className="form-group">
+            <label htmlFor="content">Content</label>
+            <input
+              className="form-control"
+              id="content"
+              name="content"
+              type="textarea"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="stars">Star Rating</label>
+            <input
+              className="form-control"
+              id="stars"
+              name="stars"
+              type="range"
+              step="0.5"
+              min="0"
+              max="5"
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="rant">Rant</label>
+            <input id="rant" name="rant" type="checkbox" defaultChecked />
+          </div>
+
+          <input
+            className="btn btn-primary"
+            type="submit"
+            value="Add Comment"
+          />
+        </form>
       </main>
-
-      <h2>Comments</h2>
-      {comments}
-      <form action={`/places/${data.place.id}/comment`} method="POST">
-        <h2>Leave a comment!</h2>
-        <div className="form-group">
-          <label htmlFor="author">Author</label>
-          <input
-            className="form-control"
-            id="author"
-            name="author"
-            placeholder="Your Name"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="content">Content</label>
-          <input
-            className="form-control"
-            id="content"
-            name="content"
-            type="textarea"
-            placeholder="Leave your review here."
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="stars">Star Rating</label>
-          <input
-            className="form-control"
-            id="stars"
-            name="stars"
-            type="range"
-            min="0"
-            max="5"
-            step=".5"
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="rant">Is this a rant!?</label>
-          <input id="rant" name="rant" type="checkbox" />
-        </div>
-        <input
-          className="btn btn-primary"
-          type="submit"
-          value="Add Comment"
-        ></input>
-      </form>
-      <a href={`/places/${data.id}/edit`} className="btn btn-warning">
-        Edit
-      </a>
-      <form method="POST" action={`/places/${data.id}?_method=DELETE`}>
-        <button type="submit" className="btn btn-danger">
-          Delete
-        </button>
-      </form>
     </Def>
   );
 }
