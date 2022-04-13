@@ -2,10 +2,9 @@ const React = require("react");
 const Def = require("../default");
 
 function show(data) {
-  // if no comments exist...
+  // comments
   let comments = <h3 className="inactive">No comments yet!</h3>;
 
-  // if comments exist...
   if (data.place.comments.length) {
     comments = data.place.comments.map((c) => {
       return (
@@ -28,7 +27,7 @@ function show(data) {
       );
     });
   }
-
+  // star rating
   let rating = <div className="inactive">Not yet rated</div>;
   let stars = "";
 
@@ -61,7 +60,7 @@ function show(data) {
             <h3>Rating {stars} starz</h3>
           </div>
         </div>
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div class="buttons">
           {/* // edit // */}
           <a href={`/places/${data.place.id}/edit`}>
             <button className="btn btn-outline-primary">Edit</button>
@@ -82,7 +81,7 @@ function show(data) {
         <hr />
         <h2>Comments</h2>
         {comments}
-        // new comment
+        {/* new comment */}
         <form method="POST" action={`/places/${data.place.id}/comment`}>
           <div className="form-group">
             <label htmlFor="author">Author</label>
@@ -111,7 +110,7 @@ function show(data) {
               max="5"
             />
           </div>
-
+          {/* rant/rave */}
           <div className="form-group">
             <label htmlFor="rant">Rant</label>
             <input id="rant" name="rant" type="checkbox" defaultChecked />
